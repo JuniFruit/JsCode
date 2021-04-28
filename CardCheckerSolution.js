@@ -45,10 +45,13 @@ const validateCred = (arr) => {
     const sum = doubledArr.reduce((item1, item2) => {
         return item1 + item2;
     });
+    //reversing back the passed array in order not to cause bugs in later functions.
+    arr.reverse();
     //checking whether a card is valid or not
     return sum % 10 === 0;
 }
 
+//console.log(validateCred(valid3));
 
 const findInvalidCards = (arr) => {
     const invalidArr = arr.filter(item => {
@@ -106,32 +109,35 @@ I made 2 versions. One is for a simple array, another is for a nested array.
 const fixACard = (array) => {
     //Checking if a card is invalid
     if (validateCred(array)) return arr;
-    //Reversing back the array because it comes reversed after passing into validateCred function. I dont know why it happens actually.
-    array.reverse();
     //Making a new array where our newly generated digits will be stored
     const newArr = [];
-    //I made do...while loop since I want generate digits again and again untill a card validates to a true one
+    //Replacing the first digit in the new array from the original one.
+    newArr[0] = array[0];
+    //I made do...while loop since I want to generate digits again and again untill our card validates to a true one
     do {
     for(i=1; i < array.length; i++) {
         let random = Math.floor(Math.random() * 10);
         newArr[i] = random;
+        
     }
    } 
    // You could implement this logic by writing (!validateCred(newArr)) I guess. This means once validateCred returns true it is no longer equals to false which means It is false for a while loop and loop stops executing.
    while (validateCred(newArr) === false)
-   //Replacing the first digit in the new array from the original one.
-   newArr[0] = array[0];
    return newArr;
 }
 
-//console.log(fixACard(invalid3));
 
-// This one is pretty much the same. Except I used Map iterator to go through all the nested arrays.
+
+//const fixed = fixACard(invalid3); //returns fixed card
+
+//console.log(validateCred(fixed)); //returns true
+
+// This one is pretty much the same, except I used Map iterator to go through all the nested arrays.
 const fixACardNested = (nestedArray) => {
     const newArr = nestedArray.map(item => {
-    
     const fixedArr = item;
-    const firstDigit = item[0]
+    const firstDigit = item[0];
+    fixedArr[0] = firstDigit;
     do {
     for(i=1; i < fixedArr.length; i++) {
         let random = Math.floor(Math.random() * 10);
@@ -139,11 +145,13 @@ const fixACardNested = (nestedArray) => {
     }
    } while (validateCred(fixedArr) === false)
    
-   fixedArr[0] = firstDigit;
+   
     return fixedArr;  
     });
     
     return newArr;
 }
 
-//console.log(fixACardNested([invalid1, invalid2]));
+
+//const fixedArr = fixACardNested([invalid1, invalid2]); //returns nested array of fixed cards
+//console.log(findInvalidCards(fixedArr)); // returns an empty array since there is no invalid cards
