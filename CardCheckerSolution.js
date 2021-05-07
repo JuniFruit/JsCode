@@ -155,3 +155,4 @@ const fixACardNested = (nestedArray) => {
 
 //const fixedArr = fixACardNested([invalid1, invalid2]); //returns nested array of fixed cards
 //console.log(findInvalidCards(fixedArr)); // returns an empty array since there is no invalid cards
+// testing
